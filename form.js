@@ -1,31 +1,24 @@
-import * as fs from 'fs'; // Jsonファイルを読み取るためにfsモジュールをインポート
+// フォームが送信されたときの処理
+document.getElementById("form-login").addEventListener("submit", async (event) => {
+  // デフォルトの動作を停止
+  event.preventDefault();
 
-const login = (userID: string, password: string): boolean => {
-  // Jsonファイルからデータを読み取る
-  const data = JSON.parse(fs.readFileSync('./data.json', 'utf8'));
+  // 入力されたユーザーIDとパスワードを取得
+  const userid = (document.getElementById("userid") as HTMLInputElement).value;
+  const password = (document.getElementById("password") as HTMLInputElement).value;
 
-  // ユーザーIDとパスワードの照会を行う
-  for (const user of data.users) {
-    if (user.userID === userID && user.password === password) {
-      return true; // ログイン成功
-    }
-  }
+  // Jsonファイルからデータを読み込む
+  const response = await fetch("data.json");
+  const data = await response.json();
 
-  return false; // ログイン失敗
-};
+  // ユーザーIDとパスワードが一致するか確認
+  const user = data.users.find((u) => u.id === userid && u.password === password);
 
-// フォームが送信された時の処理
-document.querySelector('form').addEventListener('submit', (event) => {
-  event.preventDefault(); // ページ遷移を抑制する
-
-  // フォームの入力値を取得する
-  const userID = document.querySelector('#userID').value;
-  const password = document.querySelector('#password').value;
-
-  // ログイン処理を実行する
-  if (login(userID, password)) {
-    alert('ログイン成功！');
+  // 結果を表示
+  const resultElement = document.getElementById("result");
+  if (user) {
+    resultElement.innerHTML = "ログイン成功！";
   } else {
-    alert('ログイン失敗！');
+    resultElement.innerHTML = "ログイン失敗！";
   }
 });
