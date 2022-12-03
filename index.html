@@ -1,18 +1,18 @@
-<!-- フォームを作成 -->
-<!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript" src="form.js"></script>
-  <form id="form-login">
-    <label>ユーザーID:</label>
-    <input type="text" id="userid" />
-    <br />
-    <label>パスワード:</label>
-    <input type="password" id="password" />
-    <br />
-    <button type="submit">ログイン</button>
-  </form>
+  <link rel="stylesheet" href="style.css">
 </head>
-<!-- 結果を表示するための要素を追加 -->
-<div id="result"></div>
+<body>
+  <h1>User Login</h1>
+  <form id="loginForm">
+    <label for="username">Username:</label><br>
+    <input type="text" id="username" name="username"><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password"><br><br>
+    <button type="submit" id="submitBtn">Submit</button>
+  </form>
+  <p id="status"></p>
+
+  <script src="auth.ts"></script>
+</body>
 </html>
