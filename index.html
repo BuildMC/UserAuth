@@ -1,7 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JSONデータの読み取り</title>
+</head>
+<body>
+<h1>ユーザーIDとパスワードの照会</h1>
+<!-- フォームを作成 -->
 <form>
-  <label>ユーザーID:</label><br>
-  <input type="text" id="userID"><br>
-  <label>パスワード:</label><br>
-  <input type="password" id="password"><br><br>
-  <button type="submit">ログイン</button>
-</form>
+  <label for="userid">ユーザーID:</label><br>
+  <input type="text" id="userid" name="userid"><br>
+  <label for="password">パスワード:</label><br>
+  <input type="password" id="password" name="password"><br><br>
+  <input type="button" value="照会" onclick="checkUser()">
+</form> 
+<!-- 結果を表示するためのdiv要素 -->
+<div id="result"></div>
+<script>
+  // JSONデータを読み込む
+  var userData = JSON.parse(jsonData);
+
+  // 照会ボタンがクリックされた時の処理
+  function checkUser() {
+    // 入力されたユーザーIDとパスワードを取得
+    var userid = document.getElementById("userid").value;
+    var password = document.getElementById("password").value;
+
+    // JSONデータ内のユーザーIDとパスワードを検索
+    for (var i = 0; i < userData.length; i++) {
+      if (userData[i].userid == userid && userData[i].password == password) {
+        // ユーザーIDとパスワードが一致した場合は、照会結果を表示
+        document.getElementById("result").innerHTML = "ユーザーIDとパスワードが一致しました。";
+        return;
+      }
+    }
+
+    // ユーザーIDとパスワードが一致しなかった場合は、照会結果を表示
+    document.getElementById("result").innerHTML = "ユーザーIDまたはパスワードが一致しません。";
+  }
+</script>
+</body>
+</html>
+<!-- JSONデータを埋め込む -->
+<script>
+var jsonData = '
+[
+  {"userid": "user1", "password": "pass1"},
+  {"userid": "user2", "password": "pass2"},
+  {"userid": "user3", "password": "pass3"}
+]
+';
+</script>
