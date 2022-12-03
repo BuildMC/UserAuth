@@ -1,18 +1,41 @@
+<!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>ユーザー認証</title>
 </head>
 <body>
-  <h1>User Login</h1>
-  <form id="loginForm">
-    <label for="username">Username:</label><br>
-    <input type="text" id="username" name="username"><br>
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password"><br><br>
-    <button type="submit" id="submitBtn">Submit</button>
-  </form>
-  <p id="status"></p>
+<h1>ユーザー認証</h1>
+<form>
+  <label for="username">ユーザー名:</label><br>
+  <input type="text" id="username" name="username"><br>
+  <label for="password">パスワード:</label><br>
+  <input type="password" id="password" name="password"><br><br>
+  <button type="button" onclick="authenticate()">認証</button>
+</form> 
+<div id="result"></div>
+<script>
+function authenticate() {
+  var username = document.getElementById("username").value;
+  var password = document.getElementById("password").value;
 
-  <script src="auth.ts"></script>
+  var jsonData = '{ "users": [ {"username": "john", "password": "123456"}, {"username": "jane", "password": "abcdef"} ] }';
+  var data = JSON.parse(jsonData);
+
+  var authenticated = false;
+  for (var i = 0; i < data.users.length; i++) {
+    if (data.users[i].username == username && data.users[i].password == password) {
+      authenticated = true;
+      break;
+    }
+  }
+
+  if (authenticated) {
+    document.getElementById("result").innerHTML = "認証成功";
+  } else {
+    document.getElementById("result").innerHTML = "認証失敗";
+  }
+}
+</script>
 </body>
 </html>
